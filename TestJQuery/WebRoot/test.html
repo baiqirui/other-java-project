@@ -1,0 +1,333 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    
+    <title>test page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="js/jquery-1.6.2.js"></script>
+	<script type="text/javascript">
+	   //JQuery
+	   //$()是JQuery的核心函数，可以将一个任意JS对象(如:window对象,函数对象[function],DOM对象)包装成JQuery对象;
+	   //下面的例子相当于window.onload = function() {};
+	   /**
+	   
+	   $(document).ready
+	   (  function()
+	      {
+	         alert("欢迎学习JQuery!!");
+	      }
+	   );
+	   */
+	   
+	  /**
+	   * $(expr):该函数可以通过css选择器,Xpath或html代码来匹配目标元素,所有JQuery擦着都以此为基础; 
+	   */
+	   function jq()
+	   {
+	     alert($("div > span > p").html());
+	   }
+	   
+	   function append()
+	   {
+	     $("<div><p>Hello</p></div>").appendTo("body");
+	   }
+	   
+	  /**
+	   * $(element),通过核心函数使JQuery作用于一个特定的DOM元素,它也可以接收xml文档和windows对象;
+	   */
+	   function getElement()
+	   {
+	     alert($(document).find("div > span").html());
+	   }
+	   
+	  /**
+	   * $(fn)相当于window.onload,窗口打开后载入一下信息;
+	   */
+	   $(function()
+	     {
+	       alert("$(fn)相当于$(document).ready的一个速记方式");
+	       alert($(document).find("div > span").html());
+	       //相当于载入一个事先定义好的事件函数,并且该函数是已经指定了在对应的元素和对应的事件下才会发生的;
+	     }
+	   );
+	   function changeColor()
+	   {
+	     alert($(document.body).background("black"));
+	   }
+	   
+	  /**
+	   * 将一个对象赋给变量
+	   */
+	  function fuzhi()
+	  {  
+	     //通过原始的JS方式获取;
+	     var userNameForJs = document.getElementById("userName").value;
+	     //通过JQuery方式获取;
+	     var userNameForJQ = $("#userName").val();
+	     alert("userNameForJs ========= " +　userNameForJs);
+	     alert("userNameForJQ ========= " +　userNameForJQ);
+	  }
+	  
+	  /**
+	   * 不用Id获取元素,直接通元素标签名获取该标签下的一系列元素,并且使用each方法对这一系列元素进行操作
+	   * $("标签名")
+	   */
+	   function testEach()
+	   {
+	      $("img")
+	      (
+	         function()
+	         {
+	           this.src = "img/Penguins.jpg"; 
+	         }
+	      );
+	   }
+	   
+	  /**
+	   * 遍历
+	   */
+	   function testIterator()
+	   {
+	      var imgs = $("img")
+	      for (var i = 0; i < imgs.size(); i++)
+	      {
+	         alert(imgs[i].src);
+	      }
+	   }
+	   
+	   
+	  /**
+	   * eq(n)方法,具体用于定位到某一系列标签中的第n + 1个元素[数组下表从0开始]
+	   */
+	   function getElementByEq()
+	   {
+	     $("input").eq(0).val("aaaa");
+	     var inputElement = $("input:eq(0)");
+	     alert(document.getElementById("userName").value);
+	     inputElement.val("xyr");
+	     alert(document.getElementById("userName").value);
+	   }
+	   
+      /**
+	   * get(n)方法,具体用于定位到某一系列标签中的第n + 1个元素[数组下表从0开始]
+	   * get()与eq()的唯一区别就是get返回的DOM对象而eq返回的是JQuery对象
+	   */
+	   function getElementByGet()
+	   {
+	     $("input").get(0).value = "get aaaa";
+	     var inputElement = $("input").get(0);
+	     alert(document.getElementById("userName").value);
+	     inputElement.value  = "get xyr";
+	     alert(document.getElementById("userName").value);
+	   }
+	   
+	  /**
+	   * index(obj)返回对象的索引值;
+	   */
+	   function getObjIndex(obj)
+	   {
+	      alert(obj.id);
+	      var index = $("a").index(obj);
+	      alert("index ========= " + index);
+	   }
+	   
+	  /**
+	   * size()与length()效果等价;
+	   */
+	   function getObjLength()
+	   {
+	      var size = $("a").size();
+	      var length = $("a").length;
+	      alert("size ========= " + size);
+	      alert("length ========= " + length);
+	   }
+	   
+	   
+	    
+	   $(function()
+	    {
+	       $("#button1").click(
+	         function()
+	         {
+	           $.ajax
+	           (
+	             {
+	                type: "GET",
+	                url:  "plus.do",
+	                cache: false,
+	                data:  {'param1': $("#param1").val(), 'param2': $("#param2").val()},
+	                success: function(result)
+	                {
+	                   $("#result").val(result);
+	                }
+	             }
+	           );
+	         }
+	       );
+	    }
+	   );
+	   
+	   /**
+	    * 控制<a>标记的href属性
+	    */
+	    function href1()
+	    {
+	       alert($("#t").attr("href"));
+	       $("#t").attr("href", "plus.do");
+	    }
+	    
+	    /**
+	     * after方法：在匹配的元素后面加入一段HTML;
+	     * before方法与之类似
+	     * 例如该代码产生的效果是：
+	     * <a href="#" id="t1" onclick="testAfter()">testAfter</a><font style='color:red;'><b>JQuery</b></font>
+	     */
+	     function testAfter()
+	     {
+	       $("#t1").after("<font style='color:red;'><b>JQuery</b></font>");
+	     }
+	    
+	    /**
+	     * append方法：在匹配的元素的内部且是末尾加入一段HTML;
+	     * appendTo方法与之正好相反;
+	     * 例如该代码产生的效果是： 
+	     * <a href="#" id="t2" onclick="testAppend()">testAppend<font style='color:red;'><b>JQuery</b></font></a>
+	     */
+	     function testAppend()
+	     {
+	       $("#t2").append("<font style='color:red;'><b>JQuery</b></font>");
+	     }
+	     
+	     /**
+	      * 复制$("#t3")这个JQuery对象并且把它加在$("#div1")上
+	      * 复制的时候会复制该对象的所有属性(如:该对象的鼠标点击事件);
+	      */
+	     function testClone()
+	     {
+	        $("#t3").clone().appendTo($("#div1"));
+	     }
+	     
+	     /**
+	      * 删除该节点下的html;
+	      */
+	     function testEmpty()
+	     {
+	        $("#div1").empty();
+	     }
+	     
+	    /**
+	     * 将匹配的对象包含在给定的对象的html内(warp还可以直接接收一段html,例:$("#t5").warp($("<div></div>")))
+	     * 该方法就是将 $("#t5")对象添加到$("#div1")对象中
+	     */
+	     function testWrap()
+	     {
+	        $("#div2").wrap($("#t5"));
+	     }
+	     
+	    /**
+	     * 在原来已经匹配好了对象上再增加一个匹配
+	     * 该方法将返回5个JQuery对象
+	     * <span><p>two</p></span>，<u>testadd0</u>，<u>testadd1</u>，<u><span>testadd2</span></u>，<span>testadd2</span>
+	     * add方法还能就收一个数组,(例:add([document.getElementById("a"),document.getElementById("b")]);记得加[]因为是数组
+	     */
+	     function testAdd()
+	     {
+	        var objs = $("u").add("span");
+	        alert("length === " + objs.length);
+	        alert("size === " + objs.size());
+	        for(var i = 0;i < objs.length; i++)
+	        {
+	           alert(objs.eq(i).html());
+	        }
+	     }
+	     
+	     
+	     function modifyMenu(menu_id)
+	      {
+				$.ajax({  
+				    type : "POST",  
+				    url : "getMenu.do" ,  
+				    //async : false,
+				    contentType : "application/json",  
+				    dataType : 'json',  
+				    success : function(data)
+				     {  
+				    	alert(data.menuInfoList.length);
+				     },
+				    error: function(data)
+					   {
+						   alert(data);
+						   alert(data.menuInfoList);
+					   }
+				    
+				});
+		}
+	     
+	     
+	     
+	    
+	</script>
+  </head>
+  <body>
+    <p>one</p>
+    <div>
+      <span><p>two</p></span>
+    </div>
+    <p>three</p>
+    <div>
+    <a href="#" id="test1" onclick="modifyMenu('1');">getMenu</a>
+    
+     <a href="#" id="test1" onclick="jq()">JQuery</a>
+     <a href="#" id="test2" onclick="append()">append</a>
+     <a href="#" id="test3" onclick="getElement()">getElement</a>
+     <a href="#" id="test4" onclick="changeColor()">changeColor</a>
+     <a href="#" id="test5">$(fn)</a>
+     <a href="#" id="test6" onclick="testEach()">testEach</a>
+     <a href="#" id="test7" onclick="getElementByEq()">getElementByEq</a>
+     <a href="#" id="test8" onclick="getElementByGet()">getElementByGet</a>
+     <a href="#" id="test9" onclick="getObjIndex(this)">getObjIndex</a>
+     <a href="#" id="test10" onclick="getObjLength()">getObjLength</a>
+     <a href="#" id="test11" onclick="testIterator()">testIterator</a>
+     <a href="#" id="t" onclick="href1()">testHref</a>
+     <a href="#" id="t1" onclick="testAfter()">testAfter</a>
+     <a href="#" id="t2" onclick="testAppend()">testAppend</a>
+     <a href="#" id="t3" onclick="testClone()" style="color:red">testClone</a>
+     <b id="t5" onclick="testWrap()">testWrap</b>
+     <a href="#" id="t6" onclick="testAdd()">testAdd</a>
+    </div>
+     <img src="img/Koala.jpg" width="30px" height="30px"/>
+     <img src="img/Koala.jpg" width="30px" height="30px"/>
+     <br>
+     计算器:
+     <input id="param1" type="text" size="8">
+     &nbsp;&nbsp;+&nbsp;&nbsp;
+     <input id="param2" type="text" size="8">
+     &nbsp;&nbsp;=&nbsp;&nbsp;
+     <input id="result" type="text" size="8">
+     &nbsp;&nbsp;<input id="button1" type="button" value="计算">
+    <form action="plus.do">
+    <table>
+        <tr>
+          <td>UserName: </td>
+          <td> <input id="userName" name="userName" type="text" size="8"><div style="color: red"><form:errors path="userName"></form:errors></div></td>
+        </tr>
+        <tr>
+          <td>UserPassword: </td>
+          <td><input id="userPassword" name="userPassword" type="password" size="8"><div style="color: red"><form:errors path="userPassword"></form:errors></div></td>
+        </tr>
+         <tr>
+          <td><input type="submit" value="submit" ></td>
+          <td><input type="reset" value="reset"></td>
+        </tr>
+     </table>
+    </form>
+    <a href="#" id="t3" onclick="testEmpty()" style="color:blue">testEmpty</a>
+    <br>
+    <div id="div1">
+    </div>
+    <div id="div2">
+      <a href="">aa1</a>
+    </div>
+    <u>testadd0</u><u>testadd1</u><u><span>testadd2</span></u>
+  </body>
+</html>

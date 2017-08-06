@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="femail"
+  id="myeclipse.1335233995458"
+  context-root="/femail"
+  j2ee-spec="5.0"
+  archive="femail.war">
+  <attributes>
+    <attribute name="webrootdir" value="/WebRoot" />
+  </attributes>
+</project-module>
+
